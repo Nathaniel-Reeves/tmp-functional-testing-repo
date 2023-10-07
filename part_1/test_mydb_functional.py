@@ -38,3 +38,36 @@ def describe_MyDB():
             db = MyDB(db_filename)
             with open(db_filename, "rb") as f:
                 assert pickle.load(f) == ["Stuff", "More Stuff"]
+
+    def describe_loadStrings():
+
+        def it_loads_strings_from_database(db_filename):
+            with open(db_filename, "wb") as f:
+                pickle.dump(["a", "b", "c"], f)
+            db = MyDB(db_filename)
+            assert db.loadStrings() == ["a", "b", "c"]
+
+        def it_returns_empty_list_if_database_is_empty(db_filename):
+            db = MyDB(db_filename)
+            assert db.loadStrings() == []
+
+    def describe_saveStrings():
+
+        def it_saves_strings_to_database(db_filename):
+            db = MyDB(db_filename)
+            db.saveStrings(["a", "b", "c"])
+            with open(db_filename, "rb") as f:
+                assert pickle.load(f) == ["a", "b", "c"]
+
+    def describe_saveString():
+
+        def it_saves_the_given_string_to_the_database(db_filename):
+            db = MyDB(db_filename)
+            with open(db_filename, "rb") as f:
+                assert pickle.load(f) == []
+            db.saveString("hello")
+            with open(db_filename, "rb") as f:
+                assert pickle.load(f) == ["hello"]
+            db.saveString("goodbye")
+            with open(db_filename, "rb") as f:
+                assert pickle.load(f) == ["hello", "goodbye"]
