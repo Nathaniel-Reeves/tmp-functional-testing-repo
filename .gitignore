@@ -1,0 +1,4 @@
+.vscode/*
+__pycache__/*
+part_1/__pycache__/*
+part_2/__pycache__/*
