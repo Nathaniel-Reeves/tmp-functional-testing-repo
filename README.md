@@ -1,32 +1,28 @@
-# Testing with doubles
+# Systems Testing
 
 ## Requirements
 
-Write a test suite for each of two different Python programs using test doubles (mocks, stubs, and fakes). For both test suites, use pytest, pytest-describe, and pytest-spec to implement your test cases, and use pytest-mock as a wrapper for Python's unittest.mock mock object library.
+Write a system test suite for each of two different Python programs. Implement black-box testing without the use of test doubles. Use pytest, pytest-describe, and pytest-spec to implement your test cases. If you desire to write your test suites using a different programming language, first request instructor permission.
 
-* For the first test suite, use test doubles to test each of the four methods within the provided MyDB class. Assume the implementations of the MyDB methods are correct.
+* For the first test suite, test each of the four methods within the provided MyDB class using black-box system testing. Assume the implementations of the MyDB methods are correct.
 
-  * Stubs should be used appropriately to prevent external dependencies (os and pickle) from being invoked during execution of the test suite.
+  * Do not use test doubles. Instead, invoke the test subject's procedures and manually verify that each anticipated side effect occurs as expected. Take care to set up and tear down each test case as needed to guarantee test reliability.
 
-  * Mocks should be used to appropriately assert that stubbed methods have been invoked correctly.
+* For the second test suite, implement black-box system test cases for the SquirrelServer API. Assume the implementation of the SquirrelServer API is correct.
 
-* For the second test suite, you will use test doubles to test each of the six handle___ methods within the provided SquirrelServerHandler class. Assume the implementations of the SquirrelServerHandler methods are correct.
+  * Rather than using test doubles to test class methods directly, implement test cases using a simple HTTP client to test each API endpoint as a black-box system test. This should include each of the five core API endpoints, as well as at least ten distinct failure conditions (404 responses).
 
-  * As above, stubs should be used to prevent execution of external dependencies, and mocks should be used to assert that stubbed methods have been invoked correctly.
+  * Test all API outputs and side effects: status codes, response headers, response body, records created, records updated, records deleted, etc. Multiple API endpoints may be required for some test cases, e.g. verify a record can be retrieved after being created.
 
-  * All integrations with SquirrelDB methods and BaseHTTPRequestHandler methods should be tested. Do not test these directly; rather, test their dependents using test doubles. The getRequestData and parsePath methods should not be considered integrations and need not be stubbed nor tested directly (they will be tested indirectly through other test cases).
+  * In order to accomplish black-box API system testing, a critical dependency of the test suite will be to execute the Python server program when the test runner starts.
 
-  * Use the provided FakeRequest class and the example fixtures and test cases to get started.
+  * Set up and tear down each test case as needed to ensure test reliability and consistency. This should include resetting the database file (squirrel_db.db) to a clean state at the start of each test case using a test fixture. Use the provided template database file that contains an empty table ready for testing.
 
-  * All conditional branches within each method should be tested. For example, be sure to test all occurrences of handle404.
+* Continue using describe blocks to appropriately describe components (API methods, failure conditions, etc.). Thoroughly and intentionally plan and design your test cases to achieve full test coverage of the test subjects. Try to maximize the number of test cases and minimize the number of assertions in each test case.
 
-  * Since stubs will be used for all integrations, the HTTPServer class (and the run function) should not be instantiated, invoked or tested.
-
-* Continue using describe blocks to appropriately describe components (classes, methods, etc.). Thoroughly and intentionally plan and design your test cases to achieve full test coverage of the test subjects. Try to maximize the number of test cases and minimize the number of assertions in each test case.
-
-* Your submission will be evaluated according to the quality, variety, coverage, and intentional design of your test cases. You must implement all test cases using test doubles, and you will be graded according to your methodical and correct usage of each type of double.
+* Your submission will be evaluated according to the quality, variety, coverage, and intentional design of your test cases. You must implement all test cases using black-box system testing. You will be graded according to the completeness and correctness of your test suite.
 
 ## Submission
 
-1. Submit your project using Git and GitHub. Start by creating a repo for this assignment [here](https://classroom.github.com/a/CZMcHxFc) .
+1. Submit your project using Git and GitHub. Start by creating a repo for this assignment hereLinks to an external site..
 2. Include all files for your test suites and the execution output of each test suite using the --spec format.
